@@ -96,9 +96,9 @@ def main():
         result = model.predict([data])
 
         if result == 1:
-            st.sidebar.write(':red[Клієнт покине компанію]')
+            st.sidebar.write(':red[Висока вірогідність того, що клієнт покине компанію]')
         else:
-            st.sidebar.write(':green[Клієнт не покине компанію]')
+            st.sidebar.write(':green[Висока вірогідність того, що клієнт не покине компанію]')
 
 
 if __name__ == '__main__':
