@@ -51,15 +51,15 @@ def main():
     st.title('Прогнозування Відтоку Клієнтів для Телекомунікаційної компанії')
 
     current_model = st.sidebar.selectbox('Виберіть модель для прогнозу:', models)
-    is_tv_subscriber = st.sidebar.checkbox('Є абонентом телебачення')
-    is_movie_package_subscriber = st.sidebar.checkbox('Є абонентом пакету фільмів')
-    subscription_age = st.sidebar.number_input('Вік підписки', min_value=0.00, step=0.01)
-    bill_avg = st.sidebar.number_input('Середній рахунок', min_value=0.00, step=0.01)
-    reamining_contract = st.sidebar.number_input('Що залишилися за договором', min_value=0.00, step=0.01)
-    service_failure_count = st.sidebar.number_input('Кількість збоїв обслуговування', min_value=0)
-    download_avg = st.sidebar.number_input('Середній вхідний трафік', min_value=0.00, step=0.01)
-    upload_avg = st.sidebar.number_input('Середній вихідний трафік', min_value=0.00, step=0.01)
-    download_over_limit = st.sidebar.number_input('Вхідний трафік понад ліміт', min_value=0.00, step=0.01)
+    is_tv_subscriber = st.sidebar.checkbox('Підписка на телевізійні послуги')
+    is_movie_package_subscriber = st.sidebar.checkbox('Підписка на пакет кіно')
+    subscription_age = st.sidebar.number_input('Час підписки (в місяцях)', min_value=0.00, step=0.01)
+    bill_avg = st.sidebar.number_input('Середній рахунок (грошова сума)', min_value=0.00, step=0.01)
+    reamining_contract = st.sidebar.number_input('Залишок контракту (у місяцях)', min_value=0.00, step=0.01)
+    service_failure_count = st.sidebar.number_input('Кількість збоїв у сервісі', min_value=0)
+    download_avg = st.sidebar.number_input('Середня швидкість завантаження (в Мбіт/с)', min_value=0.00, step=0.01)
+    upload_avg = st.sidebar.number_input('Середня швидкість відвантаження (в Мбіт/с)', min_value=0.00, step=0.01)
+    download_over_limit = st.sidebar.checkbox('Перевищення ліміту на завантаження')
 
     data = [
         int(is_tv_subscriber),
@@ -70,7 +70,7 @@ def main():
         service_failure_count,
         download_avg,
         upload_avg,
-        download_over_limit,
+        int(download_over_limit),
     ]
 
     y_pred = []
