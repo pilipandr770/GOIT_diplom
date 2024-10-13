@@ -47,7 +47,7 @@ def show_heat_map(y_test, y_pred, title, place):
 
 
 def main():
-    models = ['XGBoost', 'Light GBM', 'SVM']
+    models = ['XGBoost', 'RandomForest','Light GBM', 'SVM']
     st.title('Прогнозування Відтоку Клієнтів для Телекомунікаційної компанії')
 
     current_model = st.sidebar.selectbox('Виберіть модель для прогнозу:', models)
@@ -102,6 +102,12 @@ def main():
         y_train = json.load(open('./XGBoost/y_train.json'))
         y_pred_train = json.load(open('./XGBoost/y_pred_train.json'))
         model = joblib.load('./XGBoost/XGBoost_model.pkl')
+    elif current_model == 'RandomForest':
+        y_pred = json.load(open('./RandomForest/y_pred.json'))
+        y_test = json.load(open('./RandomForest/y_test.json'))
+        y_train = json.load(open('./RandomForest/y_train.json'))
+        y_pred_train = json.load(open('./RandomForest/y_pred_train.json'))
+        model = joblib.load('./RandomForest/RandomForest_model.pkl')
 
     col1, col2 = st.columns(2)
 
