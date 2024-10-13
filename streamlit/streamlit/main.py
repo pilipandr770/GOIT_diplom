@@ -6,7 +6,9 @@ import seaborn as sns
 from sklearn import metrics
 import joblib
 import json
+import pickle
 import lightgbm
+from sklearn.svm import SVC
 
 
 def scaling(data, mean, scale):
@@ -26,7 +28,7 @@ def show_metrics(y_test, y_pred, place):
         ]
     })
 
-    styler = (df_test_metrics.style.format(subset=['Value'], decimal=',', precision=2))
+    styler = (df_test_metrics.style.format(subset=['Value'], decimal=',', precision=4))
     place.write(styler.to_html(), unsafe_allow_html=True)
 
 
@@ -44,7 +46,7 @@ def show_heat_map(y_test, y_pred, title, place):
 
 
 def main():
-    models = ['Light GBM']
+    models = ['Light GBM', 'SVM']
     st.title('Прогнозування Відтоку Клієнтів для Телекомунікаційної компанії')
 
     current_model = st.sidebar.selectbox('Виберіть модель для прогнозу:', models)
@@ -83,6 +85,15 @@ def main():
         mean = json.load(open('./lightGbm/mean.json'))
         scale = json.load(open('./lightGbm/scale.json'))
         model = joblib.load('./lightGbm/light_gbm.pkl')
+        data = scaling(data, mean, scale)
+    elif current_model == 'SVM':
+        y_pred = json.load(open('./svm/y_pred.json'))
+        y_test = json.load(open('./svm/y_test.json'))
+        y_train = json.load(open('./svm/y_train.json'))
+        y_pred_train = json.load(open('./svm/y_pred_train.json'))
+        mean = json.load(open('./svm/mean.json'))
+        scale = json.load(open('./svm/scale.json'))
+        model = pickle.load(open("./svm/model_svm.pkl", "rb"))
         data = scaling(data, mean, scale)
 
     col1, col2 = st.columns(2)
