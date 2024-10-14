@@ -1,1 +1,3 @@
 .idea
+.venv
+.\streamlit\streamlit\.venv
