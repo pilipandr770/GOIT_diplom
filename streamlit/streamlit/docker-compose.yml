@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    build: .
+    container_name: ml_app
+    volumes:
+      - .:/app
+    ports:
+      - "8501:8501"

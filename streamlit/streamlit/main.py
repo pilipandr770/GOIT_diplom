@@ -7,8 +7,8 @@ from sklearn import metrics
 import joblib
 import json
 import pickle
-import lightgbm
-from sklearn.svm import SVC
+# import lightgbm
+# from sklearn.svm import SVC
 import xgboost
 
 
@@ -47,10 +47,11 @@ def show_heat_map(y_test, y_pred, title, place):
 
 
 def main():
-    models = ['XGBoost', 'RandomForest','Light GBM', 'SVM']
-    st.title('Прогнозування Відтоку Клієнтів для Телекомунікаційної компанії')
+    # models = ['XGBoost', 'RandomForest','Light GBM', 'SVM']
+    models = 'XGBoost'
+    st.title(f'Прогнозування Відтоку Клієнтів для Телекомунікаційної компанії з використанням {models}')
 
-    current_model = st.sidebar.selectbox('Виберіть модель для прогнозу:', models)
+    current_model = models
     is_tv_subscriber = st.sidebar.checkbox('Підписка на телевізійні послуги')
     is_movie_package_subscriber = st.sidebar.checkbox('Підписка на пакет кіно')
     subscription_age = st.sidebar.number_input('Час підписки (в місяцях)', min_value=0.00, step=0.01)
@@ -78,36 +79,36 @@ def main():
     y_train = []
     y_pred_train = []
 
-    if current_model == 'Light GBM':
-        y_pred = json.load(open('./lightGbm/y_pred.json'))
-        y_test = json.load(open('./lightGbm/y_test.json'))
-        y_train = json.load(open('./lightGbm/y_train.json'))
-        y_pred_train = json.load(open('./lightGbm/y_pred_train.json'))
-        mean = json.load(open('./lightGbm/mean.json'))
-        scale = json.load(open('./lightGbm/scale.json'))
-        model = joblib.load('./lightGbm/light_gbm.pkl')
-        data = scaling(data, mean, scale)
-    elif current_model == 'SVM':
-        y_pred = json.load(open('./svm/y_pred.json'))
-        y_test = json.load(open('./svm/y_test.json'))
-        y_train = json.load(open('./svm/y_train.json'))
-        y_pred_train = json.load(open('./svm/y_pred_train.json'))
-        mean = json.load(open('./svm/mean.json'))
-        scale = json.load(open('./svm/scale.json'))
-        model = pickle.load(open("./svm/model_svm.pkl", "rb"))
-        data = scaling(data, mean, scale)
-    elif current_model == 'XGBoost':
+    # if current_model == 'Light GBM':
+    #     y_pred = json.load(open('./lightGbm/y_pred.json'))
+    #     y_test = json.load(open('./lightGbm/y_test.json'))
+    #     y_train = json.load(open('./lightGbm/y_train.json'))
+    #     y_pred_train = json.load(open('./lightGbm/y_pred_train.json'))
+    #     mean = json.load(open('./lightGbm/mean.json'))
+    #     scale = json.load(open('./lightGbm/scale.json'))
+    #     model = joblib.load('./lightGbm/light_gbm.pkl')
+    #     data = scaling(data, mean, scale)
+    # elif current_model == 'SVM':
+    #     y_pred = json.load(open('./svm/y_pred.json'))
+    #     y_test = json.load(open('./svm/y_test.json'))
+    #     y_train = json.load(open('./svm/y_train.json'))
+    #     y_pred_train = json.load(open('./svm/y_pred_train.json'))
+    #     mean = json.load(open('./svm/mean.json'))
+    #     scale = json.load(open('./svm/scale.json'))
+    #     model = pickle.load(open("./svm/model_svm.pkl", "rb"))
+    #     data = scaling(data, mean, scale)
+    if current_model == 'XGBoost':
         y_pred = json.load(open('./XGBoost/y_pred.json'))
         y_test = json.load(open('./XGBoost/y_test.json'))
         y_train = json.load(open('./XGBoost/y_train.json'))
         y_pred_train = json.load(open('./XGBoost/y_pred_train.json'))
         model = joblib.load('./XGBoost/XGBoost_model.pkl')
-    elif current_model == 'RandomForest':
-        y_pred = json.load(open('./RandomForest/y_pred.json'))
-        y_test = json.load(open('./RandomForest/y_test.json'))
-        y_train = json.load(open('./RandomForest/y_train.json'))
-        y_pred_train = json.load(open('./RandomForest/y_pred_train.json'))
-        model = joblib.load('./RandomForest/RandomForest_model.pkl')
+    # elif current_model == 'RandomForest':
+    #     y_pred = json.load(open('./RandomForest/y_pred.json'))
+    #     y_test = json.load(open('./RandomForest/y_test.json'))
+    #     y_train = json.load(open('./RandomForest/y_train.json'))
+    #     y_pred_train = json.load(open('./RandomForest/y_pred_train.json'))
+    #     model = joblib.load('./RandomForest/RandomForest_model.pkl')
 
     col1, col2 = st.columns(2)
 
